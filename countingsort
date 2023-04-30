@@ -1,0 +1,64 @@
+import java.util.Arrays;
+
+public class CountingSort {
+    public static void main(String[] args) {
+        int[] input = {4,3,3,8,2,1,2};
+        int size = input.length;
+        System.out.println(Arrays.toString(input));
+        CountingSort cs = new CountingSort();
+        cs.countsort(input,size);
+        System.out.println(Arrays.toString(input));
+    }
+    void countsort(int[] inp,int size)
+    {
+        int[] output = new int[size];
+
+        //find the largest element of the input arr
+        int max = inp[0];
+        for(int i=1;i<size;i++)
+        {
+            if(inp[i]>max)
+                max = inp[i];
+        }
+
+        int[] aux = new int[max+1];
+
+        //fill the aux array with zeroes
+        for(int i=0;i<=max;i++)
+        {
+            aux[i]=0;
+        }
+
+        //count of each element in aux array
+        for(int i=0;i<size;i++)
+        {
+            aux[inp[i]]++;
+        }
+        //modify the aux array to store the
+        //cumulative sum
+        for(int i=1;i<=max;i++)
+        {
+            aux[i] = aux[i] + aux[i-1];
+        }
+        /*find the index of each element of inp
+        array in aux array & place the elements
+        in output array
+        */
+        for(int i=0;i<size;i++)
+        {
+            output[aux[inp[i]]-1] = inp[i];
+            aux[inp[i]]--;
+
+        }
+        /*
+        copy the elements of the output array
+        into the input array
+         */
+        System.out.println(Arrays.toString(aux));
+        for(int i=0;i<size;i++)
+        {
+            inp[i] = output[i];
+        }
+
+    }
+}
